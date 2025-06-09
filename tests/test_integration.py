@@ -12,8 +12,8 @@ async def test_neo4j_memory_server():
     # Initialize the manager
     neo4j_uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
     neo4j_username = os.getenv("NEO4J_USERNAME", "neo4j")
-    neo4j_password = os.getenv("NEO4J_PASSWORD", "password")
-    neo4j_database = os.getenv("NEO4J_DATABASE", "neo4j")
+    neo4j_password = os.getenv("NEO4J_PASSWORD")
+    neo4j_database = os.getenv("NEO4J_DATABASE")
 
     manager = Neo4jKnowledgeGraphManager(
         uri=neo4j_uri,

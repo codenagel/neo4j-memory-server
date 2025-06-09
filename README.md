@@ -127,7 +127,31 @@ NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your-password
 NEO4J_DATABASE=neo4j
 ```
+# Security
 
+## Environment Variables
+**NEVER** use default passwords in production. Always set these environment variables:
+
+```bash
+export NEO4J_PASSWORD="your-secure-password-here"
+export NEO4J_USERNAME="your-username"
+export NEO4J_URI="bolt://your-neo4j-host:7687"
+```
+
+## Network Security
+- Neo4j should only be accessible from trusted networks
+- Use TLS encryption for production deployments
+- Consider using Neo4j's built-in authentication and authorization
+
+## Data Protection
+- The knowledge graph may contain sensitive information
+- Ensure proper access controls are in place
+- Consider encrypting sensitive observations before storage
+
+## Docker Security
+- Change the default Neo4j password in docker-compose.yml
+- Use Docker secrets for production deployments
+- Run containers with non-root users when possible
 
 ## License
 

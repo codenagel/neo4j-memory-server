@@ -10,7 +10,7 @@ services:
       - "7687:7687"  # Bolt protocol
     environment:
       # Authentication
-      NEO4J_AUTH: neo4j/memorypassword
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:-changeme}
 
       # Memory settings
       NEO4J_dbms_memory_heap_initial__size: 512m
