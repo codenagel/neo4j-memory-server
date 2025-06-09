@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "neo4j-memory-server"
+version = "0.1.0"
+description = ""
+authors = ["codenagel"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+neo4j = "^5.28.1"
+mcp = "^1.9.3"
+mypy = "^1.16.0"
+ruff = "^0.11.13"
+
+[tool.mypy]
+python_version = "3.12"
+mypy_path = "src"
+packages = ["neo4j_memory_server"]
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

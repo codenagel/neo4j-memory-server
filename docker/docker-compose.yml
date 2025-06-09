@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:5.15-community
+    container_name: neo4j-memory-db
+    restart: unless-stopped
+    ports:
+      - "7474:7474"  # HTTP Web UI
+      - "7687:7687"  # Bolt protocol
+    environment:
+      # Authentication
+      NEO4J_AUTH: neo4j/memorypassword
+
+      # Memory settings
+      NEO4J_dbms_memory_heap_initial__size: 512m
+      NEO4J_dbms_memory_heap_max__size: 1G
+      NEO4J_dbms_memory_pagecache_size: 512m
+
+      # Security and connection settings
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*"
+      NEO4J_dbms_security_procedures_allowlist: "apoc.*"
+      NEO4J_dbms_connector_bolt_listen__address: "0.0.0.0:7687"
+      NEO4J_dbms_connector_http_listen__address: "0.0.0.0:7474"
+
+      # APOC plugin (optional but useful)
+      NEO4J_PLUGINS: '["apoc"]'
+
+      # Accept license
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+
+      # Disable authentication for development (optional)
+      # NEO4J_AUTH: none
+
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+      - ./neo4j-init:/docker-entrypoint-initdb.d
+
+    healthcheck:
+      test: ["CMD-SHELL", "neo4j status || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    networks:
+      - mcp-network
+
+  # Optional: MCP Server in Docker (alternative to running locally)
+  mcp-server:
+    build: .
+    container_name: neo4j-mcp-server
+    restart: unless-stopped
+    environment:
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USERNAME: ${NEO4J_USERNAME:-neo4j}
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD}
+      NEO4J_DATABASE: ${NEO4J_DATABASE:-neo4j}
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    networks:
+      - mcp-network
+    profiles:
+      - docker-mcp  # Only runs when explicitly enabled
+    stdin_open: true  # For MCP stdio transport
+    tty: true
+
+  # Optional: Neo4j Browser (alternative web interface)
+  neo4j-browser:
+    image: neo4j/neo4j-browser:latest
+    container_name: neo4j-browser
+    ports:
+      - "8080:8080"
+    environment:
+      NEO4J_URL: "bolt://neo4j:7687"
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    networks:
+      - mcp-network
+    profiles:
+      - browser
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  neo4j_plugins:
+
+networks:
+  mcp-network:
+    driver: bridge
