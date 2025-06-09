@@ -153,7 +153,30 @@ export NEO4J_URI="bolt://your-neo4j-host:7687"
 - Use Docker secrets for production deployments
 - Run containers with non-root users when possible
 
+## Privacy & Data Handling
+
+**Important**: This memory server stores all data you provide in the Neo4j database. Please be aware:
+
+- 🔒 **No built-in encryption** - Sensitive data should be encrypted before storage
+- 🗃️ **Persistent storage** - Data remains until explicitly deleted
+- 👤 **No anonymization** - Raw data is stored as provided
+- 🌐 **Network exposure** - Secure your Neo4j instance appropriately
+
+**For GDPR/Privacy Compliance**: Implement appropriate data handling procedures for your use case.
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
+
+## Trademark Notice
+
+Neo4j® is a registered trademark of Neo4j, Inc. This project is not affiliated with, endorsed by, or sponsored by Neo4j, Inc. We use the Neo4j name solely to indicate compatibility with Neo4j database software.
+
+## Disclaimer
+
+This software is provided "as is" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
+
+## Contributing
+
+By contributing to this project, you agree that your contributions will be licensed under the same MIT License that covers the project. See [LICENSE](LICENSE) for details.
 
