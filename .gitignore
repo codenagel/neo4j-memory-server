@@ -194,4 +194,56 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Security & Credentials (add to existing .env section)
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+.secrets/
+secrets/
+credentials/
+config.local.*
+
+# Neo4j Data Directories (prevent accidental commit of database files)
+neo4j_data/
+neo4j_logs/
+neo4j_import/
+neo4j_plugins/
+/data/
+/logs/
+/import/
+/plugins/
+
+# Backup files that might contain sensitive data
+*.bak
+*.backup
+*.dump
+*.sql
+backup/
+backups/
+
+# IDE and Editor files with potential sensitive data
+.vscode/settings.json
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
 /.env
